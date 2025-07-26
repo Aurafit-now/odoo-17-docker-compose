@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: odoo
+    name: aurafit-odoo
     env: docker
-    plan: free
     dockerfilePath: ./Dockerfile
+    autoDeploy: false
     envVars:
       - key: HOST
         value: db
@@ -13,10 +13,10 @@ services:
         value: odoo
 
   - type: pserv
-    name: db
+    name: aurafit-db
     env: docker
     dockerfilePath: ./Dockerfile-db
-    plan: free
+    autoDeploy: false
     envVars:
       - key: POSTGRES_DB
         value: postgres
