@@ -1,25 +1,26 @@
-version: "3.1"
-
 services:
-  web:
-    image: odoo:17
-    ports:
-      - "8069:8069"
-    depends_on:
-      - db
-    environment:
-      - HOST=db
-      - USER=odoo
-      - PASSWORD=odoo
+  - type: web
+    name: odoo
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: HOST
+        value: db
+      - key: USER
+        value: odoo
+      - key: PASSWORD
+        value: odoo
 
-  db:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=odoo
-      - POSTGRES_PASSWORD=odoo
-    volumes:
-      - db-data:/var/lib/postgresql/data
-
-volumes:
-  db-data:
+  - type: pserv
+    name: db
+    env: docker
+    dockerfilePath: ./Dockerfile-db
+    plan: free
+    envVars:
+      - key: POSTGRES_DB
+        value: postgres
+      - key: POSTGRES_USER
+        value: odoo
+      - key: POSTGRES_PASSWORD
+        value: odoo
